@@ -1,0 +1,28 @@
+version: '3.6'
+
+services:
+  mysql:
+    image: mysql:5.7.18
+    container_name: myapi-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "test"
+      MYSQL_DATABASE: "myapi"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    restart: always
+    networks:
+      - myapi-net
+  myapi:
+    image: ${DOCKER_REGISTRY-}myapi
+    build:
+      context: .
+      dockerfile: myAPI/Dockerfile
+    depends_on:
+      - mysql
+    networks:
+      - myapi-net
+volumes:
+  mysql-data:
+networks:
+  myapi-net:
+    driver: bridge

@@ -83,7 +83,7 @@ namespace myAPI.Controllers
                     return Unauthorized(ErrorHandler.OnError("Please enter password", StatusCodes.Status401Unauthorized, _logger));
 
                 }
-                if (request.Username != "test" || request.Password != "test")
+                if (request.Username != "test" || request.Password != "test123")
                 {
                     // Fill out response with error message as per API contract
                     return Unauthorized(ErrorHandler.OnError("Incorrect username or password", StatusCodes.Status401Unauthorized, _logger));
