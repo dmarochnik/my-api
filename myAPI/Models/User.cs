@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace myAPI.Models
 {
-    public class Register
+    public class User
     {
         public string Fname { get; set; }
 
@@ -18,7 +18,7 @@ namespace myAPI.Models
         public string Password { get; set; }
     }
 
-    public class RegisterResponse
+    public class UserResponse
     {
         public string Fname { get; set; }
 
