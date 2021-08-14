@@ -7,8 +7,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "test"
       MYSQL_DATABASE: "myapi"
-    volumes:
-      - ./mysql-data:/var/lib/mysql
     restart: always
     networks:
       - myapi-net

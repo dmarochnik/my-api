@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace myAPI.Models
+using myAPI.Models;
+
+namespace myAPI
 {
     public class ApplicationDbContext : DbContext
     {
@@ -19,6 +21,5 @@ namespace myAPI.Models
 
         // Users
         public DbSet<User> Users { get; set; }
-        public DbSet<LoginRequest> Logins { get; set; }
     }
 }

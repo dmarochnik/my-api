@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using myAPI.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace myAPI.Controllers
@@ -26,14 +27,14 @@ namespace myAPI.Controllers
         //interface IJWTAuthentication allows different controllers to authenticate different data. 
         private readonly IJWTAuthentication jWTAuthentication;
 
-        private readonly ApplicationDbContext _context;
+        private readonly DbContextOptions<ApplicationDbContext> _dbContextOptions;
 
         //logger is like Console.WriteLine, it is an message that gets printed to the console
-        public LoginController(ILogger<LoginController> logger, IJWTAuthentication jWTAuthentication, ApplicationDbContext context)
+        public LoginController(ILogger<LoginController> logger, IJWTAuthentication jWTAuthentication, DbContextOptions<ApplicationDbContext> options)
         {
-            _logger = logger;
+            this._logger = logger;
             this.jWTAuthentication = jWTAuthentication;
-            _context = context;
+            this._dbContextOptions = options;
         }
 
 /*        [HttpPost]
@@ -61,11 +62,6 @@ namespace myAPI.Controllers
         {
             try
             {
-                User u = null;
-
-                var login = _context.Logins
-                    .Where(l => l.Username == request.Username)
-                    .FirstOrDefault();
                 // This should be database logic eventually
                 if (request.Username == "test" && BCrypt.Net.BCrypt.Verify(request.Password, "$2a$11$yfTzWBzWR9.KRVpa.SPVe.q3QXkrUfc7ZGHBuKuX3XEbHczix1H8e"))
                 {
