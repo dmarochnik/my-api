@@ -7,11 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using myAPI.Controllers;
 
 namespace myAPI
 {
@@ -40,6 +41,10 @@ namespace myAPI
 
             //adding JWT to dependency injection container
             services.Add(new ServiceDescriptor(typeof(IJWTAuthentication), new JWTAuthentication("2e6a98abb5b23339ad14601d3bedc1d23847498cb18daf8cfc98c2a2095ec8f47d80053f6d4e22b8f6419407ac3083dc")));
+            services.Add(new ServiceDescriptor(
+                typeof(DbContextOptions<ApplicationDbContext>),
+                new DbContextOptionsBuilder<ApplicationDbContext>().UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
+                .Options));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

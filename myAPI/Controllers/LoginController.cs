@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using myAPI.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace myAPI.Controllers
@@ -26,11 +27,14 @@ namespace myAPI.Controllers
         //interface IJWTAuthentication allows different controllers to authenticate different data. 
         private readonly IJWTAuthentication jWTAuthentication;
 
+        private readonly DbContextOptions<ApplicationDbContext> _dbContextOptions;
+
         //logger is like Console.WriteLine, it is an message that gets printed to the console
-        public LoginController(ILogger<LoginController> logger, IJWTAuthentication jWTAuthentication)
+        public LoginController(ILogger<LoginController> logger, IJWTAuthentication jWTAuthentication, DbContextOptions<ApplicationDbContext> options)
         {
-            _logger = logger;
+            this._logger = logger;
             this.jWTAuthentication = jWTAuthentication;
+            this._dbContextOptions = options;
         }
 
 /*        [HttpPost]

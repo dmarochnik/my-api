@@ -14,14 +14,16 @@ namespace myAPI.Controllers
     public class RegisterController : ControllerBase
     {
         private readonly ILogger<RegisterController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public RegisterController(ILogger<RegisterController> logger)
+        public RegisterController(ILogger<RegisterController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpPost]
-        public IActionResult Register(Register reg)
+        public IActionResult Register(User reg)
         {
             try
             {
@@ -29,7 +31,7 @@ namespace myAPI.Controllers
                 {
                     if (reg.Password.Length < 6)
                     {
-                        return BadRequest(new RegisterResponse
+                        return BadRequest(new UserResponse
                         {
                             Error = "Password must be at least 6 characters",
                         });
@@ -38,7 +40,7 @@ namespace myAPI.Controllers
                     {
                         reg.Password = BCrypt.Net.BCrypt.HashPassword(reg.Password);
                     }
-                    return Ok(new RegisterResponse
+                    return Ok(new UserResponse
                     {
                         Fname = reg.Fname,
                         Username = reg.Username,
@@ -47,7 +49,7 @@ namespace myAPI.Controllers
                 }
                 if (reg.Fname == null || reg.Lname == null || reg.Phone == null || reg.Username == null || reg.Password == null)
                 {
-                    return BadRequest(new RegisterResponse
+                    return BadRequest(new UserResponse
                     {
                         Error = "All fields are required",
                     });

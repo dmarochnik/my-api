@@ -1,6 +1,9 @@
 version: '3.4'
 
 services:
+  mysql:
+    ports:
+      - "3306:3306"
   myapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
